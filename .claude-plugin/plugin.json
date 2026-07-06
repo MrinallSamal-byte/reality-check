@@ -1,6 +1,6 @@
 {
   "name": "reality-check",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "An honest idea validator that's on by default. Stress-tests your ideas, scans the real market, surfaces failure modes, and tells you where the project is actually weak - without the reflexive cheerleading.",
   "author": {
     "name": "Mrinall Samal"

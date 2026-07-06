@@ -37,7 +37,7 @@ the rest of the session. Confirm the new level in one line.
 
 ## Default
 
-The user configured Reality Check for maximum bluntness at setup, so treat
-**ultra** as their preferred default unless they dial it back. If they haven't
-said otherwise this session and ask for a real assessment, bring full ultra
-scrutiny.
+The default level is **full** (see the table above), matching the always-on
+hook and every host adapter. Don't assume a higher level was pre-configured —
+apply full until the user names a different one, then hold that level for the
+rest of the session.

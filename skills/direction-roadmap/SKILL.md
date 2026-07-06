@@ -66,4 +66,7 @@ Tempting work to defer, and the gate that unlocks it.
 
 Stay honest here too: if the idea hasn't been validated, say the roadmap is
 provisional and the real first step is validation, not building. Offer
-**validate-idea** or **market-scan** if those haven't been run.
+**validate-idea** or **market-scan** if those haven't been run. If the first
+test involves real customer conversations, offer **discovery-script** to turn
+that line item into an actual script instead of leaving it as advice. If it
+hinges on the money working, offer **unit-economics**.

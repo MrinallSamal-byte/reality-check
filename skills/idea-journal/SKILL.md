@@ -89,3 +89,13 @@ When the user asks what's in their journal or wants a review:
 Confirm what was written in one line and point to the file. If the user just
 logged a fresh idea without validating it, offer to run **validate-idea** first so
 the entry has a real verdict rather than a placeholder.
+
+## Related skills
+
+This journal tracks verdicts on whole ideas. Two companion skills use the same
+file for a different angle: **assumption-tracker** keeps a separate,
+finer-grained ledger of the individual `[ASSUMPTION]` tags underneath each
+verdict, and **calibration-report** mines this journal's history (once there's
+enough of it) for patterns in how the user scores and predicts outcomes.
+Mention both when relevant — a journal with several stale Parked entries or a
+lopsided verdict distribution is exactly what calibration-report is for.

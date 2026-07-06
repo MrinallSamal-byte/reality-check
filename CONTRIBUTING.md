@@ -30,6 +30,12 @@ will not ship.
 ## Before opening a PR
 
 ```
+npm run validate
+```
+
+Equivalent to running both checks by hand:
+
+```
 python3 benchmarks/score.py
 bash scripts/check-rule-copies.sh
 ```

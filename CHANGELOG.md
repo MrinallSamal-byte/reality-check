@@ -3,6 +3,46 @@
 All notable changes to Reality Check are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-07-06
+
+### Added
+- **Five new skills**, closing gaps between advice and action rather than
+  duplicating the existing eight:
+  - `assumption-tracker` — logs load-bearing assumptions to a separate
+    `assumption-ledger.md` and tracks whether they're later confirmed or
+    disproven, instead of letting a `[ASSUMPTION]` tag be the end of the story.
+  - `calibration-report` — mines the user's own `idea-journal.md` history for
+    scoring bias (e.g. consistently over-scoring Traction). Requires real
+    journal history; says so if there isn't enough yet rather than inventing
+    a pattern from a thin sample.
+  - `discovery-script` — turns "go talk to 10 users" into an actual interview
+    script targeted at the load-bearing assumption, with an explicit
+    kill-question.
+  - `unit-economics` — real LTV:CAC and payback-period math from the user's
+    own estimates, each input tagged FACT/ASSUMPTION/UNKNOWN. No invented numbers.
+  - `verdict-memo` — exports a completed validate-idea or pitch-critique
+    verdict as a shareable one-page `<slug>-memo.md`, distinct from the
+    private running idea-journal.
+- Cross-links between the new and existing skills (validate-idea,
+  idea-journal, direction-roadmap, pre-mortem, pitch-critique) so each is
+  offered where it's actually relevant.
+- README: skills table and counts updated (8 → 13), new usage examples.
+
+## [0.5.4] - 2026-07-06
+
+### Fixed
+- `reality-check-mode` skill claimed the user had "configured Reality Check for
+  maximum bluntness at setup" and defaulted to **ultra** — no such setup step
+  exists, and it silently contradicted the documented default (**full**) in
+  the README, `AGENTS.md`, every host adapter, and the always-on hook. Now
+  consistent everywhere: default is full until the user asks for another level.
+
+### Added
+- README badges (release tag, agent count, license) alongside the existing CI badge.
+- README FAQ section (API keys/setup, casual-chat behavior, when it agrees, journal storage).
+- `npm run validate` — runs the rule-sync check and benchmark harness in one command.
+- `CONTRIBUTING.md` linked from the README (was previously undiscoverable from there).
+
 ## [0.5.3] - 2026-06-30
 
 ### Added

@@ -62,4 +62,5 @@ The evidence or milestone that would genuinely lower the risk.
 Be specific and probabilistic, not alarmist. The goal is not to scare the user
 off — it's to point a flashlight at the thing most likely to kill the project so
 they can deal with it on purpose. Offer **direction-roadmap** to turn the top
-risk into a concrete first test.
+risk into a concrete first test, and **assumption-tracker** to log it so it
+gets checked instead of forgotten.

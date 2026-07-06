@@ -124,7 +124,13 @@ End with the single most useful next move, then offer the deeper skills:
 market-scan (is the market real?), pre-mortem (what kills this?),
 direction-roadmap (what do I do next?), or idea-journal (log this verdict so you
 can track it over time). If the user is weighing several ideas, offer
-compare-ideas to rank them head-to-head.
+compare-ideas to rank them head-to-head. If Path-to-traction or Feasibility
+scoring hinges on the money working out, offer unit-economics. If the
+load-bearing assumption needs a real answer rather than another guess, offer
+discovery-script to turn "go talk to users" into an actual script, and
+assumption-tracker to keep the assumption from being forgotten once it's
+tagged. If the verdict needs to leave this chat and go to a cofounder or
+investor, offer verdict-memo.
 
 ## Tone calibration
 

@@ -67,4 +67,5 @@ The genuinely strong parts — keep and lead with these. Only what's earned.
 Be direct about whether it lands. "This is good" when it isn't wastes the user's
 real shot in front of a real audience. If the underlying idea (not just the pitch)
 looks shaky, say so and offer **validate-idea** — sometimes the pitch is fine and
-the idea is the problem.
+the idea is the problem. If the user wants this critique as a document to send
+someone rather than left in chat, offer **verdict-memo**.

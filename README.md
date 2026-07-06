@@ -3,7 +3,9 @@
 *The advisor who's seen a thousand ideas and isn't impressed easily — living inside your AI.*
 
 ![validate](https://github.com/MrinallSamal-byte/Idea-Validater/actions/workflows/validate.yml/badge.svg)
-
+![release](https://img.shields.io/github/v/tag/MrinallSamal-byte/Idea-Validater?style=flat-square&color=111111&label=release)
+![works with 13 agents](https://img.shields.io/badge/works%20with-13%20agents-111111?style=flat-square)
+![license](https://img.shields.io/badge/license-MIT-111111?style=flat-square)
 
 Most assistants agree with whatever you propose. You say "I want to build X," they say "Great idea!" That feels nice and tells you nothing. Reality Check does the opposite: it pressure-tests the idea, looks up what's really happening in the market, names the ways it could fail, and tells you what to do next. It's direct by design, and — unlike a tool you have to remember to summon — it's **on by default**.
 
@@ -11,8 +13,8 @@ Most assistants agree with whatever you propose. You say "I want to build X," th
 
 | Host | Install | Gets |
 |------|---------|------|
-| Claude (Cowork desktop) | Add from repository in the plugin UI | Always-on hook **+ 8 skills** |
-| Claude Code | `/plugin marketplace add` + `/plugin install` | Always-on hook **+ 8 skills** |
+| Claude (Cowork desktop) | Add from repository in the plugin UI | Always-on hook **+ 13 skills** |
+| Claude Code | `/plugin marketplace add` + `/plugin install` | Always-on hook **+ 13 skills** |
 | Codex / OpenCode / Swival / CodeWhale | Auto-reads `AGENTS.md` | Always-on ruleset |
 | Cursor · Windsurf · Cline | Copy the matching rules file | Always-on ruleset |
 | GitHub Copilot (editor) | Reads `.github/copilot-instructions.md` | Always-on ruleset |
@@ -98,7 +100,7 @@ independently reproduced.
 
 ## The skills (Claude)
 
-On Claude, Reality Check adds an always-on honesty hook plus eight skills:
+On Claude, Reality Check adds an always-on honesty hook plus 13 skills:
 
 | Skill | Triggers on | What it does |
 |-------|-------------|--------------|
@@ -110,6 +112,11 @@ On Claude, Reality Check adds an always-on honesty hook plus eight skills:
 | **compare-ideas** | "which should I do", "rank these" | Scores several ideas on one rubric and picks one. |
 | **idea-journal** | "log this idea", "show my journal" | Durable verdict log in your project folder; surfaces patterns over time. |
 | **reality-check-mode** | "go easier", "ultra mode", "reality check off" | Sets intensity: off / lite / full / ultra. |
+| **assumption-tracker** | "track this assumption", "did that hold up" | Logs load-bearing assumptions in a separate ledger and updates their status as evidence comes in. |
+| **calibration-report** | "how's my track record", "am I biased" | Mines your own idea-journal history for scoring patterns and blind spots. |
+| **discovery-script** | "give me interview questions", "how do I test this with users" | Turns "go talk to users" into an actual script aimed at the load-bearing assumption. |
+| **unit-economics** | "check my CAC and LTV", "will this make money" | Real LTV:CAC and payback math from your own numbers — not a rubric mention. |
+| **verdict-memo** | "make this shareable", "turn this into a memo" | Exports a verdict as a one-page document for a cofounder or investor. |
 
 ## Install
 
@@ -177,6 +184,10 @@ No Node.js or external runtime is required — the always-on hook is prompt-base
 - "Review my pitch like a tough investor."
 - "I have three ideas — which should I do first?"
 - "Log this verdict and show me my idea journal."
+- "Give me a script to test this with real users."
+- "Do the unit economics actually work here?"
+- "Turn this into something I can send my cofounder."
+- "How's my track record — am I biased on anything?"
 - "Reality check off" / "go ultra" — change the intensity.
 
 ## Repository layout
@@ -185,17 +196,45 @@ No Node.js or external runtime is required — the always-on hook is prompt-base
 AGENTS.md                universal always-on ruleset (read by many agents)
 .claude-plugin/          plugin.json + marketplace.json (Claude)
 hooks/hooks.json         always-on honesty hook (UserPromptSubmit)
-skills/                  8 skills (validate-idea has references/)
+skills/                  13 skills (validate-idea has references/)
 .cursor/ .windsurf/ .clinerules/ .github/ .kiro/ .agents/   per-host rule adapters
 examples/                before/after comparisons
 docs/agent-portability.md   file-to-agent mapping
 scripts/                 canonical ruleset + sync check
 benchmarks/              honest measurement method (no fabricated results)
-gemini-extension.json  package.json  CHANGELOG.md  LICENSE
+gemini-extension.json  package.json  CHANGELOG.md  CONTRIBUTING.md  LICENSE
 ```
 
 The ruleset is identical across every adapter, kept in sync by
-`scripts/check-rule-copies.sh`.
+`scripts/check-rule-copies.sh`. Before opening a PR, run:
+
+```
+npm run validate
+```
+
+which runs the sync check and the benchmark harness in one command (see
+[`CONTRIBUTING.md`](CONTRIBUTING.md)).
+
+## FAQ
+
+**Does it need an API key or extra setup?**
+No. The always-on behavior is a plain prompt hook — no server, no network call,
+no config. `market-scan` additionally uses whatever web search tool the host
+already provides; without one it says so and reasons from general knowledge instead.
+
+**Will it slow down or clutter casual conversation?**
+No — it only engages when you share an idea, plan, or opinion, or ask for
+feedback. Factual questions and ordinary tasks are left alone.
+
+**Will it ever just agree with me?**
+Yes, when the idea earns it. The rule is never manufacture criticism to seem
+balanced, and never manufacture praise either — a genuinely strong idea gets a
+genuine "this is strong, here's why."
+
+**Does the idea journal (or the assumption ledger, or a memo) sync anywhere?**
+No — `idea-journal.md`, `assumption-ledger.md`, and any exported
+`*-memo.md` are plain files in your working folder. Back them up like any
+other project file; there's no external service involved.
 
 ## A note on honesty
 

@@ -20,4 +20,4 @@ by `scripts/check-rule-copies.sh`).
 
 If a host isn't listed, point it at `AGENTS.md` — most agents that read a root
 instruction file will pick it up. Instruction-only hosts get the always-on
-honesty behavior; skill hosts (Claude) additionally get the eight skills.
+honesty behavior; skill hosts (Claude) additionally get the 13 skills.
