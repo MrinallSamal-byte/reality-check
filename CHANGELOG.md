@@ -3,6 +3,23 @@
 All notable changes to Reality Check are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.2] - 2026-07-08
+
+### Fixed
+- **The always-on hook never actually loaded in Claude Code.** Two bugs, found
+  by installing the plugin and checking `claude plugin details` (which reported
+  `Hooks (0)`):
+  1. The hook file was missing the top-level `"hooks"` wrapper key that Claude
+     Code's plugin loader requires, so the file was silently ignored.
+  2. It used a `"type": "prompt"` hook, which performs a yes/no evaluation on a
+     side model and cannot inject instructions into the conversation anyway.
+  The hook is now a `SessionStart` **command** hook that reads the canonical
+  ruleset (`AGENTS.md`) into context (`cat` / `Get-Content` — still no Node.js
+  or other runtime required), re-firing on resume/clear/compact. Verified live:
+  `claude plugin details` now reports the hook, and a headless session confirms
+  the ruleset is in context. One source of truth: the hook can no longer drift
+  from the adapters, and `check-rule-copies.sh` asserts it points at `AGENTS.md`.
+
 ## [0.6.1] - 2026-07-07
 
 ### Fixed

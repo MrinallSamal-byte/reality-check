@@ -186,7 +186,7 @@ Or drop the ruleset into `.agents/rules/` for always-on context only.
 cd Idea-Validater && zip -r /tmp/reality-check.plugin . -x "*.git*" -x "*.DS_Store"
 ```
 
-No Node.js or external runtime is required — the always-on hook is prompt-based. On any host: if plugin hooks aren't run, the always-on layer stays quiet and the skills still work on request.
+No Node.js or external runtime is required — the always-on hook simply reads the bundled ruleset (`AGENTS.md`) into context at session start (`cat` on macOS/Linux, `Get-Content` on Windows). On any host: if plugin hooks aren't run, the always-on layer stays quiet and the skills still work on request.
 
 ### Uninstall
 
@@ -221,8 +221,8 @@ Reality Check keeps no state of its own outside the plugin. Any
 ```
 AGENTS.md                universal always-on ruleset (read by many agents)
 .claude-plugin/          plugin.json + marketplace.json (Claude)
-hooks/claude-hooks.json  always-on honesty hook (UserPromptSubmit; kept off
-                         hooks/hooks.json, which Gemini CLI auto-loads)
+hooks/claude-hooks.json  always-on honesty hook (SessionStart, reads AGENTS.md;
+                         kept off hooks/hooks.json, which Gemini CLI auto-loads)
 skills/                  13 skills (validate-idea has references/)
 commands/                /reality-check command (Gemini CLI)
 .cursor/ .windsurf/ .clinerules/ .github/ .kiro/ .agents/   per-host rule adapters
@@ -248,8 +248,8 @@ command (see [`CONTRIBUTING.md`](CONTRIBUTING.md)).
 ## FAQ
 
 **Does it need an API key or extra setup?**
-No. The always-on behavior is a plain prompt hook — no server, no network call,
-no config. `market-scan` additionally uses whatever web search tool the host
+No. The always-on behavior is a tiny hook that reads the bundled ruleset into
+context — no server, no network call, no config. `market-scan` additionally uses whatever web search tool the host
 already provides; without one it says so and reasons from general knowledge instead.
 
 **Will it slow down or clutter casual conversation?**

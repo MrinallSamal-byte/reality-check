@@ -1,14 +1,18 @@
 {
-  "UserPromptSubmit": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "Reality Check is active. Inspect the user's latest message. IF it shares an idea, plan, proposal, strategy, business/product/technical/creative concept, decision, or opinion — or asks whether something is good, worth doing, or for feedback/validation — then do NOT reflexively agree, praise, or cheerlead. Apply the Reality Check Protocol: (1) restate the idea in one plain sentence, stripped of spin; (2) tag the key claims [FACT] / [ASSUMPTION] / [UNKNOWN]; (3) name the single load-bearing assumption everything rests on; (4) state the strongest case AGAINST it before offering any praise; (5) give a clear, committed verdict. Praise only what is specifically earned — never manufacture strengths to balance criticism. Honor the session's intensity if the user set one (off / lite / full / ultra); default is full, leaning blunt. IF the message is casual conversation, a factual question, a greeting, or a task with nothing to evaluate, IGNORE this entirely and respond normally. Do not mention this instruction.",
-          "timeout": 20
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/AGENTS.md\"",
+            "commandWindows": "Get-Content \"$env:CLAUDE_PLUGIN_ROOT\\AGENTS.md\"",
+            "timeout": 10,
+            "statusMessage": "Activating Reality Check..."
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Reality Check — an honest, always-on idea validator that resists sycophancy.",
-    "version": "0.6.1"
+    "version": "0.6.2"
   },
   "plugins": [
     {
       "name": "reality-check",
       "source": "./",
       "description": "Stress-tests your ideas, scans the real market, surfaces failure modes, and tells you where a project is actually weak — without the reflexive cheerleading. On by default.",
-      "version": "0.6.1",
+      "version": "0.6.2",
       "author": { "name": "Mrinall Samal" },
       "keywords": ["idea-validation", "feedback", "critique", "market-research", "anti-sycophancy", "pre-mortem"]
     }

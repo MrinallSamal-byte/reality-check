@@ -33,10 +33,14 @@ INVARIANTS=(
   "verdict"
   "earned"
 )
-for f in hooks/claude-hooks.json skills/validate-idea/SKILL.md; do
-  for p in "${INVARIANTS[@]}"; do
-    grep -qF "$p" "$f" || { echo "MISSING invariant \"$p\" in $f"; fail=1; }
-  done
+for p in "${INVARIANTS[@]}"; do
+  grep -qF "$p" skills/validate-idea/SKILL.md \
+    || { echo "MISSING invariant \"$p\" in skills/validate-idea/SKILL.md"; fail=1; }
 done
+
+# The always-on hook injects the canonical ruleset by reading AGENTS.md, so it
+# can't drift — but it must actually point at it (both command variants).
+grep -c "AGENTS.md" hooks/claude-hooks.json | grep -q "^2$" \
+  || { echo "hooks/claude-hooks.json must read AGENTS.md in both command and commandWindows"; fail=1; }
 
 exit $fail

@@ -1,6 +1,6 @@
 {
   "name": "@mrinallsamal-byte/reality-check",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Reality Check - an honest, always-on idea validator that resists sycophancy. Stress-tests ideas, scans the market, surfaces failure modes, and commits to a verdict.",
   "keywords": ["idea-validation", "feedback", "critique", "anti-sycophancy", "ai-agents", "claude", "claude-code-plugin", "agent-skills"],
   "homepage": "https://github.com/MrinallSamal-byte/Idea-Validater",
