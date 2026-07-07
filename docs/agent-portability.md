@@ -16,8 +16,21 @@ by `scripts/check-rule-copies.sh`).
 | Cline                   | Copy rules file                                    | `.clinerules/reality-check.md` |
 | GitHub Copilot (editor) | Reads repo instructions                            | `.github/copilot-instructions.md` |
 | Kiro                    | Copy to `~/.kiro/steering/` or project steering    | `.kiro/steering/reality-check.md` |
-| Gemini / Antigravity    | Install as extension, or drop ruleset in `.agents/rules/` | `gemini-extension.json`, `.agents/rules/` |
+| Gemini / Antigravity    | Install as extension, or drop ruleset in `.agents/rules/` | `gemini-extension.json`, `commands/`, `skills/`, `.agents/rules/` |
 
 If a host isn't listed, point it at `AGENTS.md` — most agents that read a root
 instruction file will pick it up. Instruction-only hosts get the always-on
-honesty behavior; skill hosts (Claude) additionally get the 13 skills.
+honesty behavior; skill hosts (Claude, Gemini) additionally get the 13 skills.
+
+## Adapter rule
+
+Keep adapters thin. When a host supports skills or hooks, point it at the
+existing `skills/` and `hooks/` files. When a host only supports project
+instructions, its copied rule text must stay byte-identical to
+`scripts/_ruleset.txt` — `scripts/check-rule-copies.sh` (run in CI) fails on
+drift.
+
+One placement rule: the Claude hook lives at `hooks/claude-hooks.json`, not
+`hooks/hooks.json`, because Gemini CLI auto-loads `hooks/hooks.json` from
+installed extensions and the file uses Claude's hook schema. Keep host-specific
+hook files on paths only that host's manifest points at.

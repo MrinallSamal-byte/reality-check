@@ -3,6 +3,34 @@
 All notable changes to Reality Check are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.1] - 2026-07-07
+
+### Fixed
+- **Claude hook moved off Gemini's auto-discovery path.** `hooks/hooks.json` →
+  `hooks/claude-hooks.json` (with `plugin.json` updated to match): Gemini CLI
+  auto-loads `hooks/hooks.json` from installed extensions, and this repo ships
+  a Gemini extension while the file uses Claude's hook schema. Behavior on
+  Claude is unchanged.
+- `scripts/check-rule-copies.sh` now verifies each adapter contains the **whole**
+  canonical ruleset verbatim (it previously only grepped for the first line, so
+  a drifted body would pass), and asserts load-bearing canary phrases survive
+  in the always-on hook and the `validate-idea` skill.
+- `benchmarks/score.py` writes its results report as UTF-8 explicitly — on
+  Windows it used the locale encoding (cp1252), garbling em-dashes.
+
+### Added
+- `scripts/check-versions.py` — the version declared in `package.json`,
+  `plugin.json`, `marketplace.json` (both fields), `gemini-extension.json`, and
+  the latest CHANGELOG heading must be one pinned X.Y.Z; on a release-tag CI
+  run it must also match the tag. Wired into CI and `npm run validate`.
+- `/reality-check` command for Gemini CLI (`commands/reality-check.toml`) —
+  set the intensity or run a check; Gemini also picks up the 13 skills.
+- Logo (`assets/logo.svg` + dark variant) and a centered README header.
+- README Uninstall section; `bugs` field in `package.json`.
+- CI: skill-frontmatter check now requires `name:` and `description:`, not
+  just the opening `---`; new version-consistency step.
+- CONTRIBUTING: a Releasing section documenting the version-bump checklist.
+
 ## [0.6.0] - 2026-07-06
 
 ### Added

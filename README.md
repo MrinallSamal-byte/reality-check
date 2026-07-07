@@ -1,11 +1,22 @@
-# Reality Check
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img src="assets/logo.svg" width="140" alt="Reality Check">
+  </picture>
+</p>
 
-*The advisor who's seen a thousand ideas and isn't impressed easily — living inside your AI.*
+<h1 align="center">Reality Check</h1>
 
-![validate](https://github.com/MrinallSamal-byte/Idea-Validater/actions/workflows/validate.yml/badge.svg)
-![release](https://img.shields.io/github/v/tag/MrinallSamal-byte/Idea-Validater?style=flat-square&color=111111&label=release)
-![works with 13 agents](https://img.shields.io/badge/works%20with-13%20agents-111111?style=flat-square)
-![license](https://img.shields.io/badge/license-MIT-111111?style=flat-square)
+<p align="center">
+  <em>The advisor who's seen a thousand ideas and isn't impressed easily — living inside your AI.</em>
+</p>
+
+<p align="center">
+  <img src="https://github.com/MrinallSamal-byte/Idea-Validater/actions/workflows/validate.yml/badge.svg" alt="validate">
+  <img src="https://img.shields.io/github/v/tag/MrinallSamal-byte/Idea-Validater?style=flat-square&color=111111&label=release" alt="release">
+  <img src="https://img.shields.io/badge/works%20with-13%20agents-111111?style=flat-square" alt="works with 13 agents">
+  <img src="https://img.shields.io/badge/license-MIT-111111?style=flat-square" alt="license">
+</p>
 
 Most assistants agree with whatever you propose. You say "I want to build X," they say "Great idea!" That feels nice and tells you nothing. Reality Check does the opposite: it pressure-tests the idea, looks up what's really happening in the market, names the ways it could fail, and tells you what to do next. It's direct by design, and — unlike a tool you have to remember to summon — it's **on by default**.
 
@@ -19,7 +30,7 @@ Most assistants agree with whatever you propose. You say "I want to build X," th
 | Cursor · Windsurf · Cline | Copy the matching rules file | Always-on ruleset |
 | GitHub Copilot (editor) | Reads `.github/copilot-instructions.md` | Always-on ruleset |
 | Kiro | Copy to steering | Always-on ruleset |
-| Gemini / Antigravity | Install extension or drop ruleset in `.agents/rules/` | Always-on ruleset |
+| Gemini / Antigravity | Install extension or drop ruleset in `.agents/rules/` | Always-on ruleset + skills + `/reality-check` command |
 
 Full mapping: [`docs/agent-portability.md`](docs/agent-portability.md).
 
@@ -165,7 +176,9 @@ Copy the matching rules file into your project (or the host's global rules dir):
 gemini extensions install https://github.com/MrinallSamal-byte/Idea-Validater
 ```
 
-Or drop the ruleset into `.agents/rules/` for always-on context.
+Loads the ruleset as always-on context every session, picks up the skills, and
+registers the `/reality-check` command (set the intensity, or run a check).
+Or drop the ruleset into `.agents/rules/` for always-on context only.
 
 ### Drop-in `.plugin` (Claude)
 
@@ -174,6 +187,19 @@ cd Idea-Validater && zip -r /tmp/reality-check.plugin . -x "*.git*" -x "*.DS_Sto
 ```
 
 No Node.js or external runtime is required — the always-on hook is prompt-based. On any host: if plugin hooks aren't run, the always-on layer stays quiet and the skills still work on request.
+
+### Uninstall
+
+| Host | How |
+|------|-----|
+| Claude Code | `/plugin remove reality-check` |
+| Claude desktop (Cowork) | Remove the plugin in the plugin UI |
+| Gemini / Antigravity | `gemini extensions uninstall reality-check` |
+| Cursor / Windsurf / Cline / Copilot / Kiro / etc. | Delete the copied rules file |
+
+Reality Check keeps no state of its own outside the plugin. Any
+`idea-journal.md`, `assumption-ledger.md`, or exported memos are ordinary files
+*you* created in your project — keep or delete them like any other file.
 
 ## Usage
 
@@ -195,25 +221,29 @@ No Node.js or external runtime is required — the always-on hook is prompt-base
 ```
 AGENTS.md                universal always-on ruleset (read by many agents)
 .claude-plugin/          plugin.json + marketplace.json (Claude)
-hooks/hooks.json         always-on honesty hook (UserPromptSubmit)
+hooks/claude-hooks.json  always-on honesty hook (UserPromptSubmit; kept off
+                         hooks/hooks.json, which Gemini CLI auto-loads)
 skills/                  13 skills (validate-idea has references/)
+commands/                /reality-check command (Gemini CLI)
 .cursor/ .windsurf/ .clinerules/ .github/ .kiro/ .agents/   per-host rule adapters
 examples/                before/after comparisons
 docs/agent-portability.md   file-to-agent mapping
-scripts/                 canonical ruleset + sync check
+scripts/                 canonical ruleset + sync check + version check
 benchmarks/              honest measurement method (no fabricated results)
+assets/                  logo + benchmark charts
 gemini-extension.json  package.json  CHANGELOG.md  CONTRIBUTING.md  LICENSE
 ```
 
 The ruleset is identical across every adapter, kept in sync by
-`scripts/check-rule-copies.sh`. Before opening a PR, run:
+`scripts/check-rule-copies.sh`; version fields across all manifests are kept
+aligned by `scripts/check-versions.py`. Before opening a PR, run:
 
 ```
 npm run validate
 ```
 
-which runs the sync check and the benchmark harness in one command (see
-[`CONTRIBUTING.md`](CONTRIBUTING.md)).
+which runs the sync check, the version check, and the benchmark harness in one
+command (see [`CONTRIBUTING.md`](CONTRIBUTING.md)).
 
 ## FAQ
 

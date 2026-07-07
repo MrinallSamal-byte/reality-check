@@ -11,15 +11,20 @@ jobs:
         with: { python-version: "3.x" }
       - name: Validate JSON manifests
         run: |
-          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json package.json gemini-extension.json hooks/hooks.json; do
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json package.json gemini-extension.json hooks/claude-hooks.json; do
             python3 -c "import json,sys;json.load(open('$f'));print('ok',sys.argv[1])" "$f"
           done
       - name: Validate skill frontmatter
         run: |
           for f in skills/*/SKILL.md; do
-            head -1 "$f" | grep -q '^---' && echo "ok $f" || (echo "BAD frontmatter: $f"; exit 1)
+            head -1 "$f" | grep -q '^---' || { echo "BAD frontmatter (no ---): $f"; exit 1; }
+            grep -q '^name:' "$f" || { echo "BAD frontmatter (no name): $f"; exit 1; }
+            grep -q '^description:' "$f" || { echo "BAD frontmatter (no description): $f"; exit 1; }
+            echo "ok $f"
           done
       - name: Rule adapters in sync
         run: bash scripts/check-rule-copies.sh
+      - name: Versions consistent
+        run: python3 scripts/check-versions.py
       - name: Run benchmark harness
         run: python3 benchmarks/score.py

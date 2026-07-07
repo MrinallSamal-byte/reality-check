@@ -1,14 +1,15 @@
 {
   "name": "@mrinallsamal-byte/reality-check",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Reality Check - an honest, always-on idea validator that resists sycophancy. Stress-tests ideas, scans the market, surfaces failure modes, and commits to a verdict.",
   "keywords": ["idea-validation", "feedback", "critique", "anti-sycophancy", "ai-agents", "claude", "claude-code-plugin", "agent-skills"],
   "homepage": "https://github.com/MrinallSamal-byte/Idea-Validater",
   "repository": { "type": "git", "url": "https://github.com/MrinallSamal-byte/Idea-Validater.git" },
+  "bugs": { "url": "https://github.com/MrinallSamal-byte/Idea-Validater/issues" },
   "license": "MIT",
   "author": "Mrinall Samal",
-  "files": ["AGENTS.md", ".claude-plugin", "skills", "hooks", "docs", "examples"],
+  "files": ["AGENTS.md", ".claude-plugin", "skills", "hooks", "commands", "docs", "examples", "assets"],
   "scripts": {
-    "validate": "bash scripts/check-rule-copies.sh && python3 benchmarks/score.py"
+    "validate": "bash scripts/check-rule-copies.sh && python3 scripts/check-versions.py && python3 benchmarks/score.py"
   }
 }

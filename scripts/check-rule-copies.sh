@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-# Verify every host adapter contains the canonical ruleset body verbatim.
+# Verify every host adapter contains the canonical ruleset body verbatim
+# (whole body, CRLF-normalized) — grepping only the first line would let a
+# drifted body pass. Then verify the files that paraphrase the ruleset (the
+# always-on hook and the core skill) still carry its load-bearing phrases,
+# so a reword can't silently drop a rule.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-SRC="scripts/_ruleset.txt"
+
+SRC_TEXT="$(tr -d '\r' < scripts/_ruleset.txt)"
 FILES=(
   "AGENTS.md"
   ".cursor/rules/reality-check.mdc"
@@ -13,8 +18,25 @@ FILES=(
   ".agents/rules/reality-check.md"
 )
 fail=0
-need="$(head -1 "$SRC")"
 for f in "${FILES[@]}"; do
-  if grep -qF "$need" "$f"; then echo "ok   $f"; else echo "DRIFT $f"; fail=1; fi
+  body="$(tr -d '\r' < "$f")"
+  case "$body" in
+    *"$SRC_TEXT"*) echo "ok    $f" ;;
+    *) echo "DRIFT $f"; fail=1 ;;
+  esac
 done
+
+INVARIANTS=(
+  "load-bearing"
+  "[FACT]"
+  "strongest case"
+  "verdict"
+  "earned"
+)
+for f in hooks/claude-hooks.json skills/validate-idea/SKILL.md; do
+  for p in "${INVARIANTS[@]}"; do
+    grep -qF "$p" "$f" || { echo "MISSING invariant \"$p\" in $f"; fail=1; }
+  done
+done
+
 exit $fail

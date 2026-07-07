@@ -129,6 +129,6 @@ for d,r in zip(DATA,rc):
     lines.append("| %s | %s | %s | %s |"%(d["prompt"][:46],d["quality"],v,"yes" if r["calib"] else "no"))
 out="\n".join(lines)+"\n"
 os.makedirs("benchmarks/results",exist_ok=True)
-open("benchmarks/results/%s.md"%datetime.date.today().isoformat(),"w").write(out)
+open("benchmarks/results/%s.md"%datetime.date.today().isoformat(),"w",encoding="utf-8",newline="\n").write(out)
 json.dump({"dataset":DATA,"responses":RESP},open("benchmarks/data.json","w"),indent=2)
 print(out)

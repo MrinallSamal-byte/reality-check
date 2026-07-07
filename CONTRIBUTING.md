@@ -33,9 +33,18 @@ will not ship.
 npm run validate
 ```
 
-Equivalent to running both checks by hand:
+Equivalent to running the checks by hand:
 
 ```
-python3 benchmarks/score.py
 bash scripts/check-rule-copies.sh
+python3 scripts/check-versions.py
+python3 benchmarks/score.py
 ```
+
+## Releasing
+
+The version is declared in `package.json`, `.claude-plugin/plugin.json`,
+`.claude-plugin/marketplace.json` (two fields), `gemini-extension.json`, and
+the latest `CHANGELOG.md` heading. Bump all of them together, then tag
+`vX.Y.Z`. `scripts/check-versions.py` (run in CI) fails if any file drifts, and
+on a tag build it fails if the tag doesn't match the version files.
